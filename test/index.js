@@ -40,10 +40,9 @@ describe('Bus Server', () => {
 function nextTwoTimes(time, offset1, offset2) {
   time = moment(parseInt(time, 10));
   let totalOffset = (offset1 * STOP_MIN_OFFSET) + (offset2 * ROUTE_MIN_OFFSET);
-  let trainIsHere = (time.minute() % BASE_INTERVAL === totalOffset);
+  let lastStopMin = Math.ceil(time.minute() / BASE_INTERVAL) * BASE_INTERVAL;
+  let nextStop = time.minutes(0).add(lastStopMin + totalOffset, 'minute')
 
-  let lastStopMin = Math.round(time.minute() / BASE_INTERVAL) * BASE_INTERVAL + BASE_INTERVAL;
-  let nextStop = moment(time.hour(), 'hh').add(lastStopMin + totalOffset, 'minute')
   return [nextStop.format(),
           nextStop.add(BASE_INTERVAL, 'minute').format()];
 }
