@@ -41,16 +41,13 @@ function nextTwoTimes(time, offset1, offset2) {
   time = moment(parseInt(time, 10));
   let totalOffset = (offset1 * STOP_MIN_OFFSET) + (offset2 * ROUTE_MIN_OFFSET);
   let trainIsHere = (time.minute() % BASE_INTERVAL === totalOffset);
-  let trainHasPassed = (time.minute() % BASE_INTERVAL > totalOffset);
 
-  if (!trainIsHere) {
-    let lastStopMin = Math.round(time.minute() / BASE_INTERVAL) * BASE_INTERVAL + BASE_INTERVAL;
-    let nextStop = moment(time.hour(), 'hh').add(lastStopMin + totalOffset, 'minute').subtract(trainHasPassed ? 0 : BASE_INTERVAL, 'minute');
-    return [nextStop.format('hh:mm'),
-            nextStop.add(BASE_INTERVAL, 'minute').format('hh:mm')];
-  }
-  return ['now', time.add(BASE_INTERVAL, 'minutes').format('hh:mm')];
+  let lastStopMin = Math.round(time.minute() / BASE_INTERVAL) * BASE_INTERVAL + BASE_INTERVAL;
+  let nextStop = moment(time.hour(), 'hh').add(lastStopMin + totalOffset, 'minute')
+  return [nextStop.format(),
+          nextStop.add(BASE_INTERVAL, 'minute').format()];
 }
+
 
 function generateStopMap(time) {
   let stops = [];

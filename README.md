@@ -10,5 +10,5 @@ $ npm start
 ### Test
 
 ```shell
-$ npm Test
+$ npm test
 ```
